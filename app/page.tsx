@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const appointmentTypes = ["Vorsorge", "Beratung", "Standardimpfung", "Reiseimpfung"];
 
 export default function Home() {
@@ -13,6 +15,7 @@ export default function Home() {
         <div className="notice" role="status">
           Die Terminbuchung ist noch nicht freigeschaltet.
         </div>
+        <p className="primary-link"><Link href="/patient-identification">Basisdaten erfassen</Link></p>
       </section>
 
       <section aria-labelledby="appointment-types">

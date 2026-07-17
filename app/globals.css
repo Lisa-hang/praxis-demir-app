@@ -39,6 +39,24 @@ h2 { margin-top: 0; }
 ul { margin-bottom: 0; padding-left: 1.25rem; columns: 2; }
 li { margin-bottom: 0.7rem; }
 
+.patient-form { display: grid; gap: 0.55rem; margin-top: 2rem; }
+.patient-form label { margin-top: 0.65rem; font-weight: 700; }
+.patient-form input, .patient-form select {
+  width: 100%; padding: 0.75rem; border: 1px solid #aabbb5; border-radius: 0.45rem;
+  background: #fff; color: var(--text); font: inherit;
+}
+.patient-form [aria-invalid="true"] { border-color: #a52626; }
+.patient-form button, .primary-link a {
+  display: inline-block; margin-top: 1rem; padding: 0.8rem 1rem; border: 0; border-radius: 0.5rem;
+  background: var(--accent); color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+}
+.patient-form button:disabled { cursor: wait; opacity: 0.7; }
+.field-error { margin: 0; color: #8b1e1e; font-size: 0.9rem; }
+.form-error, .success { padding: 0.9rem; border-radius: 0.5rem; }
+.form-error { background: #f9dddd; color: #701717; }
+.success { background: var(--accent-soft); }
+.back-link { margin: 1.5rem 0 0; }
+
 @media (max-width: 520px) {
   main { padding: 2rem 0; }
   .hero, section:last-child { padding: 1.4rem; }

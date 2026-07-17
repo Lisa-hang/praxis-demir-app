@@ -7,7 +7,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 ## Jetzt: V1-Kernmodell und Online-Buchung
 
 - [x] Technisches Grundgerüst mit Next.js, TypeScript, Prisma, SQLite, initialer Migration, Seed, Testkonfiguration und Startseite anlegen.
-- [ ] Patient:innen-Identifikation umsetzen: gesetzlich über Versichertennummer, privat/selbstzahlend über Praxis-Patientennummer; ohne eindeutigen Treffer keine Buchung.
+- [~] Patient:innen-Identifikation umsetzen: Basisdaten werden gesetzlich über Versichertennummer und privat/selbstzahlend über Praxis-Patientennummer erfasst; der eindeutige Turbomed-Abgleich vor einer Buchung ist noch offen.
 - [ ] `StaffUser` mit den Rollen `mfa`, `doctor` und `admin` einschließlich Berechtigungsprüfungen umsetzen.
 - [ ] `AppointmentType` mit festen V1-Dauern anlegen: Vorsorge 30, Beratung 20, Standardimpfung 15 und Reiseimpfung 15 Minuten.
 - [ ] Pflegbare `AppointmentTypeAssignment` zwischen Terminarten und Ärzt:innen umsetzen; Reiseimpfung nur Dr. Demir, Standardimpfung alle drei Ärzt:innen.

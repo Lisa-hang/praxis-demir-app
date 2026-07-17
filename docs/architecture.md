@@ -30,7 +30,7 @@ Externe Systeme dürfen nur über definierte Adapter angesprochen werden. Dadurc
 
 `PrescriptionRequest`, `WaitlistEntry` und `Notification` folgen in späteren Phasen und werden nicht für den V1-Buchungskern vorausgesetzt.
 
-Das initiale Prisma-Schema bildet ausschließlich diese sechs V1-Kernmodelle ab. Listenartige Metadaten wie Fachgebiete und Pflichtfelder werden in SQLite als strukturierte JSON-Werte gespeichert. Die fachliche Identifikationsregel ist als unabhängig testbare Domänenfunktion begonnen; ein vollständiger Identifikationsablauf ist noch nicht umgesetzt.
+Das initiale Prisma-Schema bildet ausschließlich diese sechs V1-Kernmodelle ab. Listenartige Metadaten wie Fachgebiete und Pflichtfelder werden in SQLite als strukturierte JSON-Werte gespeichert. Eine öffentliche Erfassungsseite nimmt die Basisdaten von Patient:innen entgegen. Eine Server Action übergibt sie an einen Anwendungsfall, der die unabhängig testbare Identifikationsregel anwendet, Eingaben normalisiert und Patient:innen über Prisma in SQLite speichert. Dies ist noch kein Turbomed-Abgleich und erlaubt noch keine Buchung.
 
 ## Zentrale Abläufe
 
@@ -71,6 +71,7 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - Prisma-Schema und initiale SQLite-Migration für die sechs V1-Kernmodelle
 - wiederholbar ausführbarer Seed für die vier Terminarten, drei Ärzt:innen und die festgelegten Impfzuordnungen
 - Vitest als Testgrundlage mit ersten Tests der Patient:innen-Identifikationsregel
+- öffentliche Erfassung von Patient:innen-Basisdaten mit versicherungsabhängiger Identifikationsnummer und Prisma-Persistenz
 - noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
 
 ## Noch offene Architekturfragen
