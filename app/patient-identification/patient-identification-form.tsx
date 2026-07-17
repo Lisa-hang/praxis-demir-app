@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { submitPatient, type PatientFormState } from "./actions";
 
 const initialState: PatientFormState = { success: false, errors: {} };
@@ -14,7 +15,8 @@ export function PatientIdentificationForm() {
     <form action={formAction} className="patient-form">
       {state.success && (
         <div className="success" role="status">
-          Ihre Basisdaten wurden gespeichert. Eine Terminbuchung ist noch nicht erfolgt.
+          Ihre Basisdaten wurden gespeichert. <Link href="/appointment-types">Terminart auswählen</Link>
+          <span> Eine Terminbuchung ist noch nicht erfolgt.</span>
         </div>
       )}
       {error("identifier") && <div className="form-error" role="alert">{error("identifier")}</div>}

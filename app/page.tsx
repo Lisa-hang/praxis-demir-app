@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-const appointmentTypes = ["Vorsorge", "Beratung", "Standardimpfung", "Reiseimpfung"];
-
 export default function Home() {
   return (
     <main>
@@ -16,16 +14,9 @@ export default function Home() {
           Die Terminbuchung ist noch nicht freigeschaltet.
         </div>
         <p className="primary-link"><Link href="/patient-identification">Basisdaten erfassen</Link></p>
+        <p><Link href="/appointment-types">Planbare Terminarten ansehen</Link></p>
       </section>
 
-      <section aria-labelledby="appointment-types">
-        <h2 id="appointment-types">Geplante Online-Termine</h2>
-        <ul>
-          {appointmentTypes.map((appointmentType) => (
-            <li key={appointmentType}>{appointmentType}</li>
-          ))}
-        </ul>
-      </section>
     </main>
   );
 }

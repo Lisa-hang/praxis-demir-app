@@ -39,6 +39,14 @@ h2 { margin-top: 0; }
 ul { margin-bottom: 0; padding-left: 1.25rem; columns: 2; }
 li { margin-bottom: 0.7rem; }
 
+.appointment-type-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 0; padding: 0; border: 0; }
+.appointment-type-card { display: flex; gap: 0.7rem; margin: 0; padding: 1rem; border: 1px solid #dbe4e0; border-radius: 0.7rem; cursor: pointer; }
+.appointment-type-card:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.appointment-type-card input { margin-top: 0.2rem; accent-color: var(--accent); }
+.appointment-type-card span > span { display: block; margin-top: 0.6rem; color: var(--muted); }
+.appointment-type-card .appointment-type-note { font-size: 0.9rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
 .patient-form { display: grid; gap: 0.55rem; margin-top: 2rem; }
 .patient-form label { margin-top: 0.65rem; font-weight: 700; }
 .patient-form input, .patient-form select {
@@ -61,4 +69,5 @@ li { margin-bottom: 0.7rem; }
   main { padding: 2rem 0; }
   .hero, section:last-child { padding: 1.4rem; }
   ul { columns: 1; }
+  .appointment-type-list { grid-template-columns: 1fr; }
 }
