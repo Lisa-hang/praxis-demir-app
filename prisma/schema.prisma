@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum InsuranceType {
+  statutory
+  private
+  self_pay
+}
+
+enum StaffRole {
+  mfa
+  doctor
+  admin
+}
+
+enum AppointmentStatus {
+  booked
+  cancelled
+  rescheduled
+  no_show
+  blocked
+}
+
+enum AppointmentSource {
+  online
+  mfa
+  turbomed
+}
+
+enum AvailabilityBlockType {
+  regular
+  vacation
+  training
+  sick
+  practice_closed
+  acute_block
+}
+
+model Patient {
+  id                        String        @id @default(cuid())
+  name                      String
+  birthDate                 DateTime
+  insuranceType             InsuranceType
+  insuranceNumber           String?       @unique
+  practicePatientNumber     String?       @unique
+  phone                     String
+  email                     String?
+  communicationConsentSms   Boolean       @default(false)
+  communicationConsentEmail Boolean       @default(false)
+  onlineBookingAllowed      Boolean       @default(true)
+  noShowCountLast12Months   Int           @default(0)
+  appointments              Appointment[]
+
+  @@index([name, birthDate])
+}
+
+model StaffUser {
+  id                  String                      @id @default(cuid())
+  name                String
+  role                StaffRole
+  specialties         Json?
+  active              Boolean                     @default(true)
+  assignments         AppointmentTypeAssignment[]
+  doctorAppointments  Appointment[]               @relation("AppointmentDoctor")
+  createdAppointments Appointment[]               @relation("AppointmentCreator")
+  availabilityBlocks  AvailabilityBlock[]
+
+  @@index([role, active])
+}
+
+model AppointmentType {
+  id                     String                      @id @default(cuid())
+  name                   String                      @unique
+  durationMinutes        Int
+  onlineBookable         Boolean
+  visibleToPatient       Boolean
+  requiresHumanTriage    Boolean                     @default(false)
+  requiresDoctorApproval Boolean                     @default(false)
+  requiredFields         Json
+  assignments            AppointmentTypeAssignment[]
+  appointments           Appointment[]
+}
+
+model AppointmentTypeAssignment {
+  id                String          @id @default(cuid())
+  appointmentTypeId String
+  staffUserId       String
+  active            Boolean         @default(true)
+  note              String?
+  appointmentType   AppointmentType @relation(fields: [appointmentTypeId], references: [id], onDelete: Cascade)
+  staffUser         StaffUser       @relation(fields: [staffUserId], references: [id], onDelete: Cascade)
+
+  @@unique([appointmentTypeId, staffUserId])
+  @@index([staffUserId, active])
+}
+
+model Appointment {
+  id                String            @id @default(cuid())
+  patientId         String
+  appointmentTypeId String
+  doctorStaffUserId String
+  startTime         DateTime
+  endTime           DateTime
+  status            AppointmentStatus @default(booked)
+  source            AppointmentSource
+  createdByUserId   String?
+  patient           Patient           @relation(fields: [patientId], references: [id], onDelete: Restrict)
+  appointmentType   AppointmentType   @relation(fields: [appointmentTypeId], references: [id], onDelete: Restrict)
+  doctor            StaffUser         @relation("AppointmentDoctor", fields: [doctorStaffUserId], references: [id], onDelete: Restrict)
+  createdBy         StaffUser?        @relation("AppointmentCreator", fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@index([doctorStaffUserId, startTime, endTime])
+  @@index([patientId, startTime])
+}
+
+model AvailabilityBlock {
+  id               String                @id @default(cuid())
+  staffUserId      String?
+  startTime        DateTime
+  endTime          DateTime
+  type             AvailabilityBlockType
+  visibleToPatient Boolean               @default(false)
+  staffUser        StaffUser?            @relation(fields: [staffUserId], references: [id], onDelete: Cascade)
+
+  @@index([staffUserId, startTime, endTime])
+  @@index([type, startTime])
+}

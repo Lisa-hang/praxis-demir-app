@@ -8,7 +8,9 @@ Die App speichert ausschließlich notwendige Prozessdaten für Buchung, Verfügb
 
 ## Logischer Aufbau
 
-Die konkrete Technologie ist noch nicht festgelegt. Unabhängig davon wird die Anwendung in klar getrennte Verantwortungsbereiche gegliedert:
+Das technische Grundgerüst verwendet Next.js mit App Router und TypeScript. Prisma bildet den Persistenzzugriff auf SQLite ab. Diese lokale, dateibasierte Datenbank ist für das Grundgerüst und den zunächst begrenzten Betrieb festgelegt; Hosting und Betriebsmodell bleiben vor einem Produktivbetrieb zu klären.
+
+Die Anwendung wird in klar getrennte Verantwortungsbereiche gegliedert:
 
 1. **Oberflächen:** Patientenportal und geschützter interner Bereich für MFA, Ärzt:innen und Admins.
 2. **Anwendungsfälle:** Identifizieren, Slots suchen, buchen, verschieben, absagen, Zeiten sperren und Daten an Turbomed übergeben.
@@ -27,6 +29,8 @@ Externe Systeme dürfen nur über definierte Adapter angesprochen werden. Dadurc
 - `AvailabilityBlock` beschreibt reguläre Verfügbarkeit und Sperrzeiten einschließlich interner `acute_block`-Zeiten.
 
 `PrescriptionRequest`, `WaitlistEntry` und `Notification` folgen in späteren Phasen und werden nicht für den V1-Buchungskern vorausgesetzt.
+
+Das initiale Prisma-Schema bildet ausschließlich diese sechs V1-Kernmodelle ab. Listenartige Metadaten wie Fachgebiete und Pflichtfelder werden in SQLite als strukturierte JSON-Werte gespeichert. Die fachliche Identifikationsregel ist als unabhängig testbare Domänenfunktion begonnen; ein vollständiger Identifikationsablauf ist noch nicht umgesetzt.
 
 ## Zentrale Abläufe
 
@@ -61,11 +65,19 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - Geschäftsregeln erhalten automatisierte Unit- und Integrationstests.
 - Monitoring macht fehlgeschlagene Turbomed-Übergaben und technische Buchungsfehler für zuständige Mitarbeitende sichtbar.
 
+## Aktueller Implementierungsstand
+
+- Next.js-Grundgerüst mit App Router, TypeScript und einer informierenden Startseite
+- Prisma-Schema und initiale SQLite-Migration für die sechs V1-Kernmodelle
+- wiederholbar ausführbarer Seed für die vier Terminarten, drei Ärzt:innen und die festgelegten Impfzuordnungen
+- Vitest als Testgrundlage mit ersten Tests der Patient:innen-Identifikationsregel
+- noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
+
 ## Noch offene Architekturfragen
 
-- Technologie-Stack, Hosting und Datenbank
+- Hosting und Betriebsmodell
 - Turbomed-Transport, Minimaldatensatz und Abgleich der Patient:innen-IDs
 - Quelle und Pflege der Sprechzeiten
 - Kommunikationsanbieter und Einwilligungsnachweis
+- Ablage von Reiseziel und Reisedatum im V1-Datenmodell
 - Betriebs-, Datenschutz-, Aufbewahrungs- und Löschkonzept
-

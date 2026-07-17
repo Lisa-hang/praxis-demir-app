@@ -6,6 +6,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 
 ## Jetzt: V1-Kernmodell und Online-Buchung
 
+- [x] Technisches Grundgerüst mit Next.js, TypeScript, Prisma, SQLite, initialer Migration, Seed, Testkonfiguration und Startseite anlegen.
 - [ ] Patient:innen-Identifikation umsetzen: gesetzlich über Versichertennummer, privat/selbstzahlend über Praxis-Patientennummer; ohne eindeutigen Treffer keine Buchung.
 - [ ] `StaffUser` mit den Rollen `mfa`, `doctor` und `admin` einschließlich Berechtigungsprüfungen umsetzen.
 - [ ] `AppointmentType` mit festen V1-Dauern anlegen: Vorsorge 30, Beratung 20, Standardimpfung 15 und Reiseimpfung 15 Minuten.
@@ -13,6 +14,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [ ] Sprechzeiten und `AvailabilityBlock` für reguläre Zeiten, Urlaub, Fortbildung, Krankheit, Praxisschließung und `acute_block` modellieren.
 - [ ] Slot-Ermittlung implementieren: Arzt-Zuordnung, Dauer, bestehende Termine und sämtliche Blockierungen konfliktfrei berücksichtigen; interne Akutzeiten nie öffentlich anzeigen.
 - [ ] Online-Buchungsablauf für die vier freigegebenen Terminarten implementieren; Reiseziel und Reisedatum bei Reiseimpfung verpflichtend erfassen.
+- [?] Festlegen, an welchem V1-Kernobjekt Reiseziel und Reisedatum gespeichert werden; die Spec fordert beide Werte, führt sie aber in keinem Entitätsmodell als Attribute auf.
 - [ ] Gleichzeitige Buchungen sicher behandeln und Doppelbuchungen atomar verhindern.
 - [ ] Online-Verschiebung nur bis 48 Stunden vor Beginn umsetzen; alten Slot und neue Buchung konsistent in einer Transaktion ändern.
 - [ ] Online-Absage nur bis 24 Stunden vor Beginn umsetzen; danach auf telefonischen Kontakt verweisen.
@@ -40,4 +42,3 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [ ] Wartelistenangebote mit vier Stunden Annahmefrist automatisieren.
 - [ ] Benachrichtigungsprozess bei Arztausfall einschließlich Telefonliste umsetzen.
 - [ ] Turbomed-Integration nach Praxiserfahrung zur stabilen Schnittstelle ausbauen.
-

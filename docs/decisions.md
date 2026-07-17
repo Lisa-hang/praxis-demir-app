@@ -56,6 +56,12 @@ Dieses Dokument hält richtungsweisende Entscheidungen knapp fest. Neue Einträg
 - **Entscheidung:** Online-Verschiebung ist bis 48 Stunden und Online-Absage bis 24 Stunden vor Beginn möglich. Nach drei No-Shows innerhalb von zwölf Monaten wird die Online-Buchung gesperrt und nur manuell mit dokumentierter Begründung wieder freigegeben.
 - **Folge:** Fristen werden serverseitig geprüft; die vollständige No-Show-Automatik ist Phase 3.
 
+## D-010 – Technisches Grundgerüst
+
+- **Status:** angenommen
+- **Entscheidung:** Die Anwendung verwendet Next.js mit App Router und TypeScript, Prisma als ORM und SQLite als verpflichtende Datenbank. Vitest bildet die Grundlage für automatisierte Regeltests.
+- **Folge:** Das V1-Domänenmodell wird im Prisma-Schema abgebildet. Hosting und Betriebsmodell bleiben vor dem Produktivbetrieb gesondert zu entscheiden.
+
 ## Offene Entscheidungen
 
 | ID | Thema | Zu klären |
@@ -63,7 +69,7 @@ Dieses Dokument hält richtungsweisende Entscheidungen knapp fest. Neue Einträg
 | O-001 | Turbomed | API, HL7 oder Export; Minimaldaten, Patientenabgleich und Fehlerprozess |
 | O-002 | Sprechzeiten | Direkte Pflege in der App oder Übernahme aus einem vorhandenen Kalender |
 | O-003 | Kommunikation | Kanäle in V1, Anbieter und belastbarer Einwilligungsnachweis |
-| O-004 | Technik | Stack, Datenbank, Hosting und Betriebsmodell |
+| O-004 | Technikbetrieb | Hosting und Betriebsmodell |
 | O-005 | Datenschutzbetrieb | Verschlüsselung, Auditierung, Aufbewahrung, Löschung und Verantwortlichkeiten |
 | O-006 | Rezept-Workflow | Aufnahme in V1 oder verbindliche Verschiebung in Phase 2 |
-
+| O-007 | Reiseimpfungsdaten | An welchem V1-Kernobjekt Reiseziel und Reisedatum gespeichert werden |
