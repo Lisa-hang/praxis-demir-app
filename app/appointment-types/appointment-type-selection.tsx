@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 type AppointmentTypeOption = {
@@ -40,9 +41,14 @@ export function AppointmentTypeSelection({ appointmentTypes }: { appointmentType
       </fieldset>
 
       {selectedType && (
-        <p className="notice" role="status">
-          {selectedType.name} wurde ausgewählt. Eine Terminbuchung ist noch nicht erfolgt.
-        </p>
+        <div className="notice" role="status">
+          <p>{selectedType.name} wurde ausgewählt. Eine Terminbuchung ist noch nicht erfolgt.</p>
+          <p className="primary-link">
+            <Link href={`/appointment-types/doctors?appointmentTypeId=${encodeURIComponent(selectedType.id)}`}>
+              Ärzt:innen anzeigen
+            </Link>
+          </p>
+        </div>
       )}
     </>
   );

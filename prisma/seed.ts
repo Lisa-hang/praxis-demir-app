@@ -30,16 +30,20 @@ async function main() {
     ),
   );
 
+  const preventiveCare = types.find((type) => type.name === "Vorsorge")!;
+  const consultation = types.find((type) => type.name === "Beratung")!;
   const standardVaccination = types.find((type) => type.name === "Standardimpfung")!;
   const travelVaccination = types.find((type) => type.name === "Reiseimpfung")!;
   const demir = doctors.find((doctor) => doctor.name === "Dr. Demir")!;
 
-  for (const doctor of doctors) {
-    await prisma.appointmentTypeAssignment.upsert({
-      where: { appointmentTypeId_staffUserId: { appointmentTypeId: standardVaccination.id, staffUserId: doctor.id } },
-      update: { active: true },
-      create: { appointmentTypeId: standardVaccination.id, staffUserId: doctor.id },
-    });
+  for (const appointmentType of [preventiveCare, consultation, standardVaccination]) {
+    for (const doctor of doctors) {
+      await prisma.appointmentTypeAssignment.upsert({
+        where: { appointmentTypeId_staffUserId: { appointmentTypeId: appointmentType.id, staffUserId: doctor.id } },
+        update: { active: true },
+        create: { appointmentTypeId: appointmentType.id, staffUserId: doctor.id },
+      });
+    }
   }
 
   await prisma.appointmentTypeAssignment.upsert({

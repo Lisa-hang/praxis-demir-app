@@ -73,6 +73,7 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - Vitest als Testgrundlage mit ersten Tests der Patient:innen-Identifikationsregel
 - öffentliche Erfassung von Patient:innen-Basisdaten mit versicherungsabhängiger Identifikationsnummer und Prisma-Persistenz
 - öffentliche Auswahlseite für online buchbare und sichtbare Terminarten; sie liest die Seed-Daten über einen Anwendungsfall, speichert noch keine Auswahl und ermittelt keine Slots
+- öffentliche Ärzt:innen-Auswahlseite nach Terminart; sie liest ausschließlich aktive `AppointmentTypeAssignment`-Zuordnungen zu aktiven `StaffUser` mit `role = doctor` und ermittelt weder Slots noch Uhrzeiten oder Buchungen
 - noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
 
 ## Noch offene Architekturfragen

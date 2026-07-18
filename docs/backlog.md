@@ -10,7 +10,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [~] Patient:innen-Identifikation umsetzen: Basisdaten werden gesetzlich über Versichertennummer und privat/selbstzahlend über Praxis-Patientennummer erfasst; der eindeutige Turbomed-Abgleich vor einer Buchung ist noch offen.
 - [ ] `StaffUser` mit den Rollen `mfa`, `doctor` und `admin` einschließlich Berechtigungsprüfungen umsetzen.
 - [x] `AppointmentType` mit festen V1-Dauern anlegen: Vorsorge 30, Beratung 20, Standardimpfung 15 und Reiseimpfung 15 Minuten; online sichtbare Terminarten können im Patientenportal ausgewählt werden, ohne bereits eine Buchung anzulegen.
-- [ ] Pflegbare `AppointmentTypeAssignment` zwischen Terminarten und Ärzt:innen umsetzen; Reiseimpfung nur Dr. Demir, Standardimpfung alle drei Ärzt:innen.
+- [x] Pflegbare `AppointmentTypeAssignment` zwischen Terminarten und Ärzt:innen umsetzen; Reiseimpfung nur Dr. Demir, Vorsorge, Beratung und Standardimpfung alle drei Ärzt:innen. Patient:innen sehen nach der Terminart-Auswahl die aktiv zugeordneten Ärzt:innen, ohne dass Slots oder Buchungen ermittelt werden.
 - [ ] Sprechzeiten und `AvailabilityBlock` für reguläre Zeiten, Urlaub, Fortbildung, Krankheit, Praxisschließung und `acute_block` modellieren.
 - [ ] Slot-Ermittlung implementieren: Arzt-Zuordnung, Dauer, bestehende Termine und sämtliche Blockierungen konfliktfrei berücksichtigen; interne Akutzeiten nie öffentlich anzeigen.
 - [ ] Online-Buchungsablauf für die vier freigegebenen Terminarten implementieren; Reiseziel und Reisedatum bei Reiseimpfung verpflichtend erfassen.
