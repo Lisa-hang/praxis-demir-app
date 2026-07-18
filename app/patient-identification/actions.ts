@@ -5,6 +5,7 @@ import { createPatient } from "@/lib/application/create-patient";
 export type PatientFormState = {
   success: boolean;
   errors: Record<string, string>;
+  patientId?: string;
 };
 
 export async function submitPatient(
@@ -23,6 +24,6 @@ export async function submitPatient(
   });
 
   return result.success
-    ? { success: true, errors: {} }
+    ? { success: true, errors: {}, patientId: result.patientId }
     : { success: false, errors: result.errors };
 }

@@ -15,7 +15,7 @@ export function PatientIdentificationForm() {
     <form action={formAction} className="patient-form">
       {state.success && (
         <div className="success" role="status">
-          Ihre Basisdaten wurden gespeichert. <Link href="/appointment-types">Terminart auswählen</Link>
+          Ihre Basisdaten wurden gespeichert. <Link href={`/appointment-types?patientId=${encodeURIComponent(state.patientId!)}`}>Terminart auswählen</Link>
           <span> Eine Terminbuchung ist noch nicht erfolgt.</span>
         </div>
       )}

@@ -10,7 +10,13 @@ type AppointmentTypeOption = {
   hasRequiredFields: boolean;
 };
 
-export function AppointmentTypeSelection({ appointmentTypes }: { appointmentTypes: AppointmentTypeOption[] }) {
+export function AppointmentTypeSelection({
+  appointmentTypes,
+  patientId,
+}: {
+  appointmentTypes: AppointmentTypeOption[];
+  patientId: string;
+}) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedType = appointmentTypes.find((appointmentType) => appointmentType.id === selectedId);
 
@@ -44,7 +50,7 @@ export function AppointmentTypeSelection({ appointmentTypes }: { appointmentType
         <div className="notice" role="status">
           <p>{selectedType.name} wurde ausgewählt. Eine Terminbuchung ist noch nicht erfolgt.</p>
           <p className="primary-link">
-            <Link href={`/appointment-types/doctors?appointmentTypeId=${encodeURIComponent(selectedType.id)}`}>
+            <Link href={`/appointment-types/doctors?patientId=${encodeURIComponent(patientId)}&appointmentTypeId=${encodeURIComponent(selectedType.id)}`}>
               Ärzt:innen anzeigen
             </Link>
           </p>

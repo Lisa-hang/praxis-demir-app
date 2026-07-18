@@ -77,7 +77,7 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
 
 - Öffentliche Zeitfensterseite nach Terminart und Ärzt:in: Der lesende Anwendungsfall erzeugt aus sichtbaren regulären `AvailabilityBlock`-Zeiten dauerbasierte Slots und schließt bestehende Termine sowie nicht reguläre, arztbezogene oder globale Sperrblöcke aus. Er erstellt keine Reservierung oder Buchung.
-- Öffentliche, rein lesende Zusammenfassung nach der Zeitfenster-Auswahl: Terminart-ID, Ärzt:innen-ID und ISO-Startzeit werden als URL-Parameter übergeben und serverseitig erneut gegen die aktuell verfügbaren Slots validiert. Die Seite zeigt nur die Auswahl und speichert oder reserviert nichts.
+- Öffentlicher, rein lesender Termin-Auswahlfluss nach der Basisdatenerfassung: Ausschließlich die `patientId` wird zusammen mit Terminart-ID, Ärzt:innen-ID und ISO-Startzeit als URL-Parameter weitergegeben. Jede Auswahlseite lädt die Patient:in serverseitig über Prisma erneut und lässt nur existierende Patient:innen mit `onlineBookingAllowed = true` weiter; die Zusammenfassung zeigt ihren Namen sowie die weiterhin serverseitig validierte Auswahl. Sie speichert oder reserviert nichts.
 
 ## Noch offene Architekturfragen
 

@@ -7,7 +7,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 ## Jetzt: V1-Kernmodell und Online-Buchung
 
 - [x] Technisches Grundgerüst mit Next.js, TypeScript, Prisma, SQLite, initialer Migration, Seed, Testkonfiguration und Startseite anlegen.
-- [~] Patient:innen-Identifikation umsetzen: Basisdaten werden gesetzlich über Versichertennummer und privat/selbstzahlend über Praxis-Patientennummer erfasst; der eindeutige Turbomed-Abgleich vor einer Buchung ist noch offen.
+- [~] Patient:innen-Identifikation umsetzen: Basisdaten werden gesetzlich über Versichertennummer und privat/selbstzahlend über Praxis-Patientennummer erfasst; ihre ID wird im rein lesenden Termin-Auswahlfluss serverseitig validiert und bis zur Zusammenfassung weitergegeben. Der eindeutige Turbomed-Abgleich vor einer Buchung ist noch offen.
 - [ ] `StaffUser` mit den Rollen `mfa`, `doctor` und `admin` einschließlich Berechtigungsprüfungen umsetzen.
 - [x] `AppointmentType` mit festen V1-Dauern anlegen: Vorsorge 30, Beratung 20, Standardimpfung 15 und Reiseimpfung 15 Minuten; online sichtbare Terminarten können im Patientenportal ausgewählt werden, ohne bereits eine Buchung anzulegen.
 - [x] Pflegbare `AppointmentTypeAssignment` zwischen Terminarten und Ärzt:innen umsetzen; Reiseimpfung nur Dr. Demir, Vorsorge, Beratung und Standardimpfung alle drei Ärzt:innen. Patient:innen sehen nach der Terminart-Auswahl die aktiv zugeordneten Ärzt:innen, ohne dass Slots oder Buchungen ermittelt werden.
@@ -25,7 +25,8 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 
 - [x] Einfache patientenöffentliche Zeitfensteranzeige: Sie validiert die aktive Terminart-/Ärzt:innen-Zuordnung, erzeugt dauerbasierte Slots aus regulären, sichtbaren `AvailabilityBlock`-Zeiten und schließt bestehende Termine sowie nicht reguläre, globale und arztbezogene Sperrblöcke aus. Sie erstellt keine Reservierung oder Buchung.
 - [x] Der Seed enthält einfache, patientensichtbare Beispiel-Sprechzeiten für alle drei Ärzt:innen.
-- [x] Patient:innen können ein angezeigtes Zeitfenster auswählen und dessen Terminart, Ärzt:in sowie Datum und Uhrzeit in einer rein lesenden Zusammenfassung prüfen. Die serverseitige Validierung akzeptiert nur weiterhin verfügbare Slots; es wird weder reserviert noch ein Termin oder Patient:innenbezug gespeichert.
+- [x] Patient:innen können ein angezeigtes Zeitfenster auswählen und dessen Terminart, Ärzt:in sowie Datum und Uhrzeit in einer rein lesenden Zusammenfassung prüfen. Die serverseitige Validierung akzeptiert nur weiterhin verfügbare Slots; es wird weder reserviert noch ein Termin gespeichert.
+- [x] Nach erfolgreicher Basisdatenerfassung wird ausschließlich die `patientId` über Terminart, Ärzt:innen- und Zeitfenster-Auswahl bis zur Zusammenfassung weitergegeben. Jede Seite validiert die ID serverseitig gegen eine existierende, für Online-Buchung freigegebene Patient:in; die Zusammenfassung zeigt ihren Namen nur lesend an.
 
 ## V1-Integration vor Produktionsbetrieb
 

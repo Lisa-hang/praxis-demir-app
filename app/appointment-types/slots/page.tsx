@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { getOnlineBookingPatient } from "@/lib/application/get-online-booking-patient";
 import { listAvailableSlots } from "@/lib/application/list-available-slots";
 
 export const dynamic = "force-dynamic";
 
 type SlotsPageProps = {
-  searchParams: Promise<{ appointmentTypeId?: string | string[]; doctorId?: string | string[] }>;
+  searchParams: Promise<{ patientId?: string | string[]; appointmentTypeId?: string | string[]; doctorId?: string | string[] }>;
 };
 
 function formatSlot(date: Date) {
@@ -16,12 +17,25 @@ function formatSlot(date: Date) {
 }
 
 export default async function SlotsPage({ searchParams }: SlotsPageProps) {
-  const { appointmentTypeId, doctorId } = await searchParams;
+  const { patientId, appointmentTypeId, doctorId } = await searchParams;
+  const selectedPatientId = typeof patientId === "string" ? patientId : undefined;
   const selectedTypeId = typeof appointmentTypeId === "string" ? appointmentTypeId : undefined;
   const selectedDoctorId = typeof doctorId === "string" ? doctorId : undefined;
+  const patient = selectedPatientId ? await getOnlineBookingPatient(selectedPatientId) : null;
   const result = selectedTypeId && selectedDoctorId
     ? await listAvailableSlots(selectedTypeId, selectedDoctorId)
     : null;
+
+  if (!patient) {
+    return (
+      <main><section>
+        <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
+        <h1>Basisdaten erforderlich</h1>
+        <p className="intro">Bitte erfassen Sie zuerst gültige Basisdaten, bevor Sie fortfahren. Wenn Ihre Online-Buchung gesperrt ist, rufen Sie uns bitte an.</p>
+        <p className="primary-link"><Link href="/patient-identification">Basisdaten erfassen</Link></p>
+      </section></main>
+    );
+  }
 
   if (!result) {
     return (
@@ -29,7 +43,7 @@ export default async function SlotsPage({ searchParams }: SlotsPageProps) {
         <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
         <h1>Auswahl unvollständig</h1>
         <p className="intro">Bitte wählen Sie zuerst eine planbare Terminart und eine passende Ärztin oder einen passenden Arzt aus.</p>
-        <p className="primary-link"><Link href="/appointment-types">Zur Terminart-Auswahl</Link></p>
+        <p className="primary-link"><Link href={`/appointment-types?patientId=${encodeURIComponent(patient.id)}`}>Zur Terminart-Auswahl</Link></p>
       </section></main>
     );
   }
@@ -44,7 +58,7 @@ export default async function SlotsPage({ searchParams }: SlotsPageProps) {
         <ul className="slot-list">
           {result.slots.map((slot) => (
             <li key={slot.startTime.toISOString()}>
-              <Link href={`/appointment-types/summary?appointmentTypeId=${encodeURIComponent(selectedTypeId!)}&doctorId=${encodeURIComponent(selectedDoctorId!)}&startTime=${encodeURIComponent(slot.startTime.toISOString())}`}>
+              <Link href={`/appointment-types/summary?patientId=${encodeURIComponent(patient.id)}&appointmentTypeId=${encodeURIComponent(selectedTypeId!)}&doctorId=${encodeURIComponent(selectedDoctorId!)}&startTime=${encodeURIComponent(slot.startTime.toISOString())}`}>
                 {formatSlot(slot.startTime)} Uhr auswählen
               </Link>
             </li>
@@ -54,7 +68,7 @@ export default async function SlotsPage({ searchParams }: SlotsPageProps) {
         <p className="notice" role="status">Derzeit sind keine planbaren Zeitfenster verfügbar. Bitte wählen Sie eine andere Ärztin oder einen anderen Arzt.</p>
       )}
 
-      <p className="back-link"><Link href={`/appointment-types/doctors?appointmentTypeId=${encodeURIComponent(selectedTypeId!)}`}>Ärzt:in ändern</Link></p>
+      <p className="back-link"><Link href={`/appointment-types/doctors?patientId=${encodeURIComponent(patient.id)}&appointmentTypeId=${encodeURIComponent(selectedTypeId!)}`}>Ärzt:in ändern</Link></p>
     </section></main>
   );
 }
