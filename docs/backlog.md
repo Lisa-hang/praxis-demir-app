@@ -34,6 +34,10 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [x] Doppelbuchungen werden atomar verhindert: Eine Transaktion prüft den Slot erneut; SQLite-Trigger verweigern zusätzlich überlappende aktive Termine derselben Ärztin beziehungsweise desselben Arztes.
 - [~] Der Online-Buchungsablauf für die vier freigegebenen Terminarten ist damit bis zur verbindlichen Bestätigung umgesetzt. Reiseziel und Reisedatum für Reiseimpfungen bleiben wegen der offenen Datenmodellentscheidung weiterhin ausgenommen.
 
+### Statusaktualisierung – Interne MFA-Terminübersicht
+
+- [x] Rein lesende interne Übersicht unter `/mfa/appointments`: Sie liest online angelegte Termine serverseitig aus SQLite über Prisma, zeigt Datum und Uhrzeit, Patient:in, Terminart, Ärzt:in, Status und Quelle an und sortiert nach Terminbeginn aufsteigend. Sie enthält weder Authentifizierung noch Schreib-, Benachrichtigungs-, Akutslot- oder Turbomed-Funktionen.
+
 ## V1-Integration vor Produktionsbetrieb
 
 - [?] Verfügbare Turbomed-Schnittstelle klären: API, HL7 oder definierter Export.

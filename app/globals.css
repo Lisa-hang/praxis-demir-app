@@ -79,6 +79,10 @@ li { margin-bottom: 0.7rem; }
 .form-error { background: #f9dddd; color: #701717; }
 .success { background: var(--accent-soft); }
 .back-link { margin: 1.5rem 0 0; }
+.appointment-overview { overflow-x: auto; margin-top: 2rem; }
+.appointment-overview table { width: 100%; border-collapse: collapse; text-align: left; }
+.appointment-overview th, .appointment-overview td { padding: 0.8rem; border-bottom: 1px solid #dbe4e0; vertical-align: top; }
+.appointment-overview th { color: var(--muted); font-size: 0.9rem; }
 
 @media (max-width: 520px) {
   main { padding: 2rem 0; }

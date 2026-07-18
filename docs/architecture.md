@@ -76,10 +76,11 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - öffentliche Erfassung von Patient:innen-Basisdaten mit versicherungsabhängiger Identifikationsnummer und Prisma-Persistenz
 - öffentliche Auswahlseite für online buchbare und sichtbare Terminarten; sie liest die Seed-Daten über einen Anwendungsfall, speichert noch keine Auswahl und ermittelt keine Slots
 - öffentliche Ärzt:innen-Auswahlseite nach Terminart; sie liest ausschließlich aktive `AppointmentTypeAssignment`-Zuordnungen zu aktiven `StaffUser` mit `role = doctor` und ermittelt weder Slots noch Uhrzeiten oder Buchungen
-- noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
+- noch keine Authentifizierung oder vollständige interne Verwaltungsoberfläche
 
 - Öffentliche Zeitfensterseite nach Terminart und Ärzt:in: Der lesende Anwendungsfall erzeugt aus sichtbaren regulären `AvailabilityBlock`-Zeiten dauerbasierte Slots und schließt bestehende Termine sowie nicht reguläre, arztbezogene oder globale Sperrblöcke aus. Er erstellt keine Reservierung oder Buchung.
 - Öffentlicher, rein lesender Termin-Auswahlfluss nach der Basisdatenerfassung: Ausschließlich die `patientId` wird zusammen mit Terminart-ID, Ärzt:innen-ID und ISO-Startzeit als URL-Parameter weitergegeben. Jede Auswahlseite lädt die Patient:in serverseitig über Prisma erneut und lässt nur existierende Patient:innen mit `onlineBookingAllowed = true` weiter; die Zusammenfassung zeigt ihren Namen sowie die weiterhin serverseitig validierte Auswahl. Sie speichert oder reserviert nichts.
+- Rein lesende MFA-Terminübersicht unter `/mfa/appointments`: Eine Server Component liest ausschließlich Termine mit `source = online` aus SQLite über Prisma, einschließlich der zugehörigen Patient:innen-, Terminart- und Ärzt:innen-Namen. Sie sortiert nach `startTime` aufsteigend und bietet keine Authentifizierung, Schreibvorgänge oder weitere Verwaltungsfunktionen.
 
 ## Noch offene Architekturfragen
 
