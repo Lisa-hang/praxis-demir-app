@@ -28,6 +28,12 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [x] Patient:innen können ein angezeigtes Zeitfenster auswählen und dessen Terminart, Ärzt:in sowie Datum und Uhrzeit in einer rein lesenden Zusammenfassung prüfen. Die serverseitige Validierung akzeptiert nur weiterhin verfügbare Slots; es wird weder reserviert noch ein Termin gespeichert.
 - [x] Nach erfolgreicher Basisdatenerfassung wird ausschließlich die `patientId` über Terminart, Ärzt:innen- und Zeitfenster-Auswahl bis zur Zusammenfassung weitergegeben. Jede Seite validiert die ID serverseitig gegen eine existierende, für Online-Buchung freigegebene Patient:in; die Zusammenfassung zeigt ihren Namen nur lesend an.
 
+### Statusaktualisierung – Verbindliche Online-Buchung
+
+- [x] Die Zusammenfassung speichert erst nach ausdrücklicher Bestätigung einen `Appointment` mit `status = booked` und `source = online`. Patient:in, Terminart, Arzt-Zuordnung und Slot werden unmittelbar vor dem Speichern serverseitig erneut geprüft.
+- [x] Doppelbuchungen werden atomar verhindert: Eine Transaktion prüft den Slot erneut; SQLite-Trigger verweigern zusätzlich überlappende aktive Termine derselben Ärztin beziehungsweise desselben Arztes.
+- [~] Der Online-Buchungsablauf für die vier freigegebenen Terminarten ist damit bis zur verbindlichen Bestätigung umgesetzt. Reiseziel und Reisedatum für Reiseimpfungen bleiben wegen der offenen Datenmodellentscheidung weiterhin ausgenommen.
+
 ## V1-Integration vor Produktionsbetrieb
 
 - [?] Verfügbare Turbomed-Schnittstelle klären: API, HL7 oder definierter Export.

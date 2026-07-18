@@ -44,6 +44,8 @@ Die Anwendung identifiziert zuerst die Patientin oder den Patienten, prüft `onl
 
 Nach erfolgreicher lokaler Buchung wird die Übergabe an Turbomed nachvollziehbar angestoßen. Die konkrete Transportform bleibt bis zur Schnittstellenklärung offen; Fehler dürfen nicht unbemerkt bleiben oder zu einer zweiten Buchung führen.
 
+Die Zusammenfassung bleibt bis zum ausdrücklichen Klick rein lesend. Erst die Server Action führt die vollständige Prüfung innerhalb einer Prisma-Transaktion erneut aus und speichert `Appointment.status = booked` sowie `Appointment.source = online`. SQLite-Trigger verweigern als zweite Schutzschicht das Einfügen oder Aktivieren überlappender Termine derselben Ärztin beziehungsweise desselben Arztes. Ein dadurch abgewiesener Termin wird nicht gespeichert und zur erneuten Auswahl zurückgeleitet. Der Schritt versendet keine Benachrichtigung und löst keine Turbomed-Übergabe aus.
+
 ### Verschieben und absagen
 
 Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stunden vor Terminbeginn erlaubt. Beim Verschieben werden erneute Verfügbarkeitsprüfung, neue Reservierung und Freigabe des alten Slots konsistent ausgeführt.

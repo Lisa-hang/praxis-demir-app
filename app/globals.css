@@ -68,6 +68,10 @@ li { margin-bottom: 0.7rem; }
   background: var(--accent); color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
 }
 .patient-form button:disabled { cursor: wait; opacity: 0.7; }
+.booking-form button {
+  margin-top: 1rem; padding: 0.8rem 1rem; border: 0; border-radius: 0.5rem;
+  background: var(--accent); color: #fff; font: inherit; font-weight: 700; cursor: pointer;
+}
 .notice p { margin: 0; }
 .notice .primary-link { margin-top: 1rem; }
 .field-error { margin: 0; color: #8b1e1e; font-size: 0.9rem; }

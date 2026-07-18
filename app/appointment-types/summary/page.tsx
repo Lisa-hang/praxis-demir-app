@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getOnlineBookingPatient } from "@/lib/application/get-online-booking-patient";
 import { getSelectedSlotSummary } from "@/lib/application/get-selected-slot-summary";
+import { submitOnlineAppointment } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,7 @@ type SummaryPageProps = {
     appointmentTypeId?: string | string[];
     doctorId?: string | string[];
     startTime?: string | string[];
+    bookingError?: string | string[];
   }>;
 };
 
@@ -31,6 +33,7 @@ export default async function SummaryPage({ searchParams }: SummaryPageProps) {
   const appointmentTypeId = singleValue(params.appointmentTypeId);
   const doctorId = singleValue(params.doctorId);
   const startTime = singleValue(params.startTime);
+  const bookingError = singleValue(params.bookingError);
   const patient = patientId ? await getOnlineBookingPatient(patientId) : null;
   const summary = patient && appointmentTypeId && doctorId && startTime
     ? await getSelectedSlotSummary(appointmentTypeId, doctorId, startTime)
@@ -68,6 +71,14 @@ export default async function SummaryPage({ searchParams }: SummaryPageProps) {
         <div><dt>Ärzt:in</dt><dd>{summary.doctor.name}</dd></div>
         <div><dt>Datum und Uhrzeit</dt><dd>{formatSlot(summary.startTime)} Uhr</dd></div>
       </dl>
+      {bookingError && <p className="form-error" role="alert">Dieses Zeitfenster ist nicht mehr verfügbar. Bitte wählen Sie einen anderen Termin aus.</p>}
+      <form action={submitOnlineAppointment} className="booking-form">
+        <input type="hidden" name="patientId" value={patient.id} />
+        <input type="hidden" name="appointmentTypeId" value={appointmentTypeId} />
+        <input type="hidden" name="doctorId" value={doctorId} />
+        <input type="hidden" name="startTime" value={startTime} />
+        <button type="submit">Termin verbindlich anfragen/buchen</button>
+      </form>
       <p className="notice" role="status">Es wurde noch keine verbindliche Buchung gespeichert.</p>
       <p className="back-link"><Link href={`/appointment-types/slots?patientId=${encodeURIComponent(patient.id)}&appointmentTypeId=${encodeURIComponent(appointmentTypeId!)}&doctorId=${encodeURIComponent(doctorId!)}`}>Zeitfenster ändern</Link></p>
     </section></main>

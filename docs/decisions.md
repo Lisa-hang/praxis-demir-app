@@ -68,6 +68,12 @@ Dieses Dokument hält richtungsweisende Entscheidungen knapp fest. Neue Einträg
 - **Entscheidung:** Für die reine Zeitfensteranzeige beginnen Slots am Anfang eines patientensichtbaren regulären `AvailabilityBlock` und folgen lückenlos im festen Takt der Dauer der gewählten Terminart. Ein verbleibender Rest, der nicht die volle Termindauer erreicht, wird nicht angezeigt.
 - **Folge:** Die Regel ist ohne Buchungs- oder Reservierungszustand deterministisch testbar. Spätere fachliche Anforderungen an Pausen, abweichende Starttakte oder Vorlaufzeiten erfordern eine neue Entscheidung.
 
+## D-012 – Doppelbuchungsschutz in SQLite
+
+- **Status:** angenommen
+- **Entscheidung:** Die bestätigte Online-Buchung prüft die Auswahl innerhalb einer Datenbanktransaktion erneut. SQLite-Trigger verhindern zusätzlich beim Einfügen oder Aktualisieren, dass aktive Termine (`booked`, `rescheduled`, `blocked`) derselben Ärztin beziehungsweise desselben Arztes zeitlich überlappen.
+- **Folge:** Auch parallele oder spätere alternative Schreibwege können keinen zweiten aktiven Termin im selben Arztzeitraum speichern. Ein Trigger-Konflikt wird im Buchungsablauf als inzwischen nicht mehr verfügbarer Slot behandelt.
+
 ## Offene Entscheidungen
 
 | ID | Thema | Zu klären |
