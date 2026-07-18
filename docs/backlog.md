@@ -21,6 +21,11 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 - [ ] MFA-Verwaltung für Anlegen, Verschieben, Absagen sowie kurzfristiges Sperren betroffener Slots bereitstellen.
 - [ ] Rollen- und Regeltests für alle V1-Abläufe ergänzen.
 
+### Statusaktualisierung – Zeitfensteranzeige
+
+- [x] Einfache patientenöffentliche Zeitfensteranzeige: Sie validiert die aktive Terminart-/Ärzt:innen-Zuordnung, erzeugt dauerbasierte Slots aus regulären, sichtbaren `AvailabilityBlock`-Zeiten und schließt bestehende Termine sowie nicht reguläre, globale und arztbezogene Sperrblöcke aus. Sie erstellt keine Reservierung oder Buchung.
+- [x] Der Seed enthält einfache, patientensichtbare Beispiel-Sprechzeiten für alle drei Ärzt:innen.
+
 ## V1-Integration vor Produktionsbetrieb
 
 - [?] Verfügbare Turbomed-Schnittstelle klären: API, HL7 oder definierter Export.

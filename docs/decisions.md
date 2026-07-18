@@ -62,6 +62,12 @@ Dieses Dokument hält richtungsweisende Entscheidungen knapp fest. Neue Einträg
 - **Entscheidung:** Die Anwendung verwendet Next.js mit App Router und TypeScript, Prisma als ORM und SQLite als verpflichtende Datenbank. Vitest bildet die Grundlage für automatisierte Regeltests.
 - **Folge:** Das V1-Domänenmodell wird im Prisma-Schema abgebildet. Hosting und Betriebsmodell bleiben vor dem Produktivbetrieb gesondert zu entscheiden.
 
+## D-011 – Technische Rasterregel für die Zeitfensteranzeige
+
+- **Status:** angenommen
+- **Entscheidung:** Für die reine Zeitfensteranzeige beginnen Slots am Anfang eines patientensichtbaren regulären `AvailabilityBlock` und folgen lückenlos im festen Takt der Dauer der gewählten Terminart. Ein verbleibender Rest, der nicht die volle Termindauer erreicht, wird nicht angezeigt.
+- **Folge:** Die Regel ist ohne Buchungs- oder Reservierungszustand deterministisch testbar. Spätere fachliche Anforderungen an Pausen, abweichende Starttakte oder Vorlaufzeiten erfordern eine neue Entscheidung.
+
 ## Offene Entscheidungen
 
 | ID | Thema | Zu klären |

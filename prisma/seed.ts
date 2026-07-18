@@ -1,4 +1,4 @@
-import { PrismaClient, StaffRole } from "@prisma/client";
+import { AvailabilityBlockType, PrismaClient, StaffRole } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -8,6 +8,13 @@ const appointmentTypes = [
   { name: "Standardimpfung", durationMinutes: 15, requiredFields: [] },
   { name: "Reiseimpfung", durationMinutes: 15, requiredFields: ["travelDestination", "travelDate"] },
 ] as const;
+
+function nextWeekdayAt(hour: number, durationHours: number) {
+  const date = new Date();
+  date.setHours(hour, 0, 0, 0);
+  while (date.getDay() === 0 || date.getDay() === 6 || date <= new Date()) date.setDate(date.getDate() + 1);
+  return { startTime: date, endTime: new Date(date.getTime() + durationHours * 60 * 60 * 1000) };
+}
 
 async function main() {
   const doctors = await Promise.all(
@@ -51,6 +58,15 @@ async function main() {
     update: { active: true },
     create: { appointmentTypeId: travelVaccination.id, staffUserId: demir.id },
   });
+
+  for (const [index, doctor] of doctors.entries()) {
+    const { startTime, endTime } = nextWeekdayAt(9 + index, 3);
+    await prisma.availabilityBlock.upsert({
+      where: { id: `seed-regular-availability-${doctor.id}` },
+      update: { staffUserId: doctor.id, startTime, endTime, type: AvailabilityBlockType.regular, visibleToPatient: true },
+      create: { id: `seed-regular-availability-${doctor.id}`, staffUserId: doctor.id, startTime, endTime, type: AvailabilityBlockType.regular, visibleToPatient: true },
+    });
+  }
 }
 
 main()

@@ -16,38 +16,36 @@ export default async function DoctorsPage({ searchParams }: DoctorsPageProps) {
 
   if (!appointmentType) {
     return (
-      <main>
-        <section>
-          <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
-          <h1>Terminart auswählen</h1>
-          <p className="intro">
-            Bitte wählen Sie zuerst eine planbare Terminart aus, damit wir passende Ärzt:innen anzeigen können.
-          </p>
-          <p className="primary-link"><Link href="/appointment-types">Zur Terminart-Auswahl</Link></p>
-        </section>
-      </main>
+      <main><section>
+        <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
+        <h1>Terminart auswählen</h1>
+        <p className="intro">Bitte wählen Sie zuerst eine planbare Terminart aus, damit wir passende Ärzt:innen anzeigen können.</p>
+        <p className="primary-link"><Link href="/appointment-types">Zur Terminart-Auswahl</Link></p>
+      </section></main>
     );
   }
 
   return (
-    <main>
-      <section>
-        <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
-        <h1>Passende Ärzt:innen</h1>
-        <p className="intro">
-          Diese Ärzt:innen dürfen {appointmentType.name} übernehmen. Es werden noch keine Termine oder Uhrzeiten angezeigt.
-        </p>
+    <main><section>
+      <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
+      <h1>Passende Ärzt:innen</h1>
+      <p className="intro">Wählen Sie eine Ärztin oder einen Arzt aus, um mögliche Zeitfenster für {appointmentType.name} zu sehen.</p>
 
-        {appointmentType.assignments.length > 0 ? (
-          <ul className="doctor-list">
-            {appointmentType.assignments.map(({ staffUser }) => <li key={staffUser.id}>{staffUser.name}</li>)}
-          </ul>
-        ) : (
-          <p className="notice" role="status">Für diese Terminart ist derzeit keine Ärztin und kein Arzt zugeordnet.</p>
-        )}
+      {appointmentType.assignments.length > 0 ? (
+        <ul className="doctor-list">
+          {appointmentType.assignments.map(({ staffUser }) => (
+            <li key={staffUser.id}>
+              <Link href={`/appointment-types/slots?appointmentTypeId=${encodeURIComponent(selectedId!)}&doctorId=${encodeURIComponent(staffUser.id)}`}>
+                {staffUser.name}: Zeitfenster anzeigen
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="notice" role="status">Für diese Terminart ist derzeit keine Ärztin und kein Arzt zugeordnet.</p>
+      )}
 
-        <p className="back-link"><Link href="/appointment-types">Terminart ändern</Link></p>
-      </section>
-    </main>
+      <p className="back-link"><Link href="/appointment-types">Terminart ändern</Link></p>
+    </section></main>
   );
 }

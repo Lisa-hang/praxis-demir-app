@@ -76,6 +76,8 @@ Verschieben ist online nur mindestens 48 Stunden, Absagen nur mindestens 24 Stun
 - öffentliche Ärzt:innen-Auswahlseite nach Terminart; sie liest ausschließlich aktive `AppointmentTypeAssignment`-Zuordnungen zu aktiven `StaffUser` mit `role = doctor` und ermittelt weder Slots noch Uhrzeiten oder Buchungen
 - noch keine Authentifizierung, Slot-Ermittlung, Buchung oder interne Verwaltungsoberfläche
 
+- Öffentliche Zeitfensterseite nach Terminart und Ärzt:in: Der lesende Anwendungsfall erzeugt aus sichtbaren regulären `AvailabilityBlock`-Zeiten dauerbasierte Slots und schließt bestehende Termine sowie nicht reguläre, arztbezogene oder globale Sperrblöcke aus. Er erstellt keine Reservierung oder Buchung.
+
 ## Noch offene Architekturfragen
 
 - Hosting und Betriebsmodell
