@@ -38,11 +38,17 @@ export default async function SlotsPage({ searchParams }: SlotsPageProps) {
     <main><section>
       <p className="eyebrow">Praxis Demir &amp; Kollegen</p>
       <h1>Mögliche Zeitfenster</h1>
-      <p className="intro">{result.appointmentType.name} bei {result.doctor.name}. Die Auswahl eines Zeitfensters und eine Buchung folgen erst in einem späteren Schritt.</p>
+      <p className="intro">{result.appointmentType.name} bei {result.doctor.name}. Wählen Sie ein Zeitfenster aus, um die unverbindliche Zusammenfassung zu sehen.</p>
 
       {result.slots.length > 0 ? (
         <ul className="slot-list">
-          {result.slots.map((slot) => <li key={slot.startTime.toISOString()}>{formatSlot(slot.startTime)} Uhr</li>)}
+          {result.slots.map((slot) => (
+            <li key={slot.startTime.toISOString()}>
+              <Link href={`/appointment-types/summary?appointmentTypeId=${encodeURIComponent(selectedTypeId!)}&doctorId=${encodeURIComponent(selectedDoctorId!)}&startTime=${encodeURIComponent(slot.startTime.toISOString())}`}>
+                {formatSlot(slot.startTime)} Uhr auswählen
+              </Link>
+            </li>
+          ))}
         </ul>
       ) : (
         <p className="notice" role="status">Derzeit sind keine planbaren Zeitfenster verfügbar. Bitte wählen Sie eine andere Ärztin oder einen anderen Arzt.</p>

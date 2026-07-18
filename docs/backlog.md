@@ -25,6 +25,7 @@ Status: `[ ]` offen · `[~]` in Arbeit · `[x]` erledigt · `[?]` Klärung nöti
 
 - [x] Einfache patientenöffentliche Zeitfensteranzeige: Sie validiert die aktive Terminart-/Ärzt:innen-Zuordnung, erzeugt dauerbasierte Slots aus regulären, sichtbaren `AvailabilityBlock`-Zeiten und schließt bestehende Termine sowie nicht reguläre, globale und arztbezogene Sperrblöcke aus. Sie erstellt keine Reservierung oder Buchung.
 - [x] Der Seed enthält einfache, patientensichtbare Beispiel-Sprechzeiten für alle drei Ärzt:innen.
+- [x] Patient:innen können ein angezeigtes Zeitfenster auswählen und dessen Terminart, Ärzt:in sowie Datum und Uhrzeit in einer rein lesenden Zusammenfassung prüfen. Die serverseitige Validierung akzeptiert nur weiterhin verfügbare Slots; es wird weder reserviert noch ein Termin oder Patient:innenbezug gespeichert.
 
 ## V1-Integration vor Produktionsbetrieb
 
